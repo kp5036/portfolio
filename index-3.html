@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Krish Patel | Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#0b0f1e;--bg2:#111827;--bg3:#1a2235;--orange:#f97316;--orange2:#fb923c;--text:#e2e8f0;--muted:#64748b;--border:#1e2d40;--white:#f8fafc;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;overflow-x:hidden;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px;}
+
+/* NAVBAR */
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:58px;background:rgba(11,15,30,0.9);border-bottom:1px solid var(--border);position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(12px);}
+.logo{font-size:18px;font-weight:800;color:var(--white);text-decoration:none;}
+.logo span{color:var(--orange);}
+.nav-links{display:flex;gap:4px;}
+.nl{padding:6px 14px;font-size:13px;color:var(--muted);border-radius:7px;cursor:pointer;transition:all 0.2s;border:none;background:none;font-family:inherit;text-decoration:none;display:inline-block;}
+.nl:hover,.nl.active{color:var(--orange);background:rgba(249,115,22,0.08);}
+
+/* SECTIONS */
+.section{min-height:100vh;padding:100px 80px 60px;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:translateY(30px);transition:opacity 0.7s,transform 0.7s;}
+.section.visible{opacity:1;transform:none;}
+
+/* HERO */
+.avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--orange),#7c3aed);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#fff;margin-bottom:20px;border:2px solid rgba(249,115,22,0.3);}
+.hero-eyebrow{font-size:11px;letter-spacing:2px;color:var(--orange);text-transform:uppercase;margin-bottom:12px;}
+.hero-name{font-size:52px;font-weight:800;color:var(--white);line-height:1.05;margin-bottom:8px;}
+.hero-name span{color:var(--orange);}
+.typed-role{font-size:16px;color:var(--muted);margin-bottom:20px;min-height:24px;}
+.typed-role span{color:var(--orange);}
+.hero-desc{font-size:15px;color:var(--text);line-height:1.8;max-width:560px;margin-bottom:28px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px;}
+.btn-o{padding:11px 24px;background:var(--orange);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.2s;text-decoration:none;display:inline-flex;align-items:center;gap:7px;}
+.btn-o:hover{background:var(--orange2);}
+.btn-ghost{padding:11px 24px;background:none;color:var(--orange);border:1.5px solid var(--orange);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:background 0.2s;}
+.btn-ghost:hover{background:rgba(249,115,22,0.08);}
+.stats{display:flex;gap:32px;flex-wrap:wrap;}
+.stat-n{font-size:28px;font-weight:800;color:var(--orange);}
+.stat-l{font-size:12px;color:var(--muted);margin-top:2px;}
+.divider-v{width:1px;background:var(--border);}
+
+/* SECTION HEADERS */
+.sec-label{font-size:11px;letter-spacing:2px;color:var(--orange);text-transform:uppercase;margin-bottom:8px;}
+.sec-title{font-size:32px;font-weight:700;color:var(--white);margin-bottom:16px;}
+.sec-title span{color:var(--orange);}
+.orange-line{width:40px;height:3px;background:var(--orange);border-radius:2px;margin-bottom:28px;}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:800px;}
+.about-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:20px;}
+.about-card-title{font-size:11px;color:var(--orange);margin-bottom:10px;letter-spacing:1px;text-transform:uppercase;}
+.about-card-text{font-size:13px;color:var(--muted);line-height:1.7;}
+.about-card-text strong{color:var(--text);}
+.tl-item{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;}
+.tl-dot{width:8px;height:8px;border-radius:50%;background:var(--orange);margin-top:5px;flex-shrink:0;}
+.tl-text{font-size:12px;color:var(--muted);line-height:1.5;}
+.tl-text strong{color:var(--text);display:block;font-size:13px;}
+
+/* PROJECTS */
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;}
+.proj-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;transition:border-color 0.2s,transform 0.2s;position:relative;overflow:hidden;}
+.proj-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--orange),var(--orange2));transform:scaleX(0);transition:transform 0.3s;transform-origin:left;}
+.proj-card:hover{border-color:var(--orange);transform:translateY(-4px);}
+.proj-card:hover::after{transform:scaleX(1);}
+.proj-icon{font-size:28px;margin-bottom:12px;}
+.proj-name{font-size:14px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.proj-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:12px;}
+.proj-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
+.ptag{font-size:11px;padding:3px 8px;border-radius:5px;background:rgba(249,115,22,0.1);color:var(--orange);border:1px solid rgba(249,115,22,0.2);}
+.click-hint{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px;margin-top:4px;}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(6px);}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:32px;max-width:520px;width:90%;transform:translateY(24px);transition:transform 0.3s;position:relative;max-height:85vh;overflow-y:auto;}
+.modal-overlay.open .modal{transform:none;}
+.modal-close{position:absolute;top:16px;right:16px;background:var(--bg3);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-size:16px;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;}
+.modal-close:hover{color:var(--white);}
+.modal-icon{font-size:36px;margin-bottom:14px;}
+.modal-title{font-size:22px;font-weight:700;color:var(--white);margin-bottom:6px;}
+.modal-stack{font-size:12px;color:var(--orange);margin-bottom:16px;line-height:1.6;}
+.modal-desc{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:20px;}
+.modal-features-title{font-size:11px;color:var(--text);font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;}
+.modal-feature{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:13px;color:var(--muted);}
+.modal-feature::before{content:'→';color:var(--orange);flex-shrink:0;}
+.modal-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+.mbtn-live{padding:10px 20px;background:var(--orange);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:background 0.2s;}
+.mbtn-live:hover{background:var(--orange2);}
+.mbtn-gh{padding:10px 20px;background:none;color:var(--orange);border:1.5px solid var(--orange);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:background 0.2s;}
+.mbtn-gh:hover{background:rgba(249,115,22,0.08);}
+
+/* SKILLS */
+.skills-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:800px;}
+.skill-item{margin-bottom:18px;}
+.skill-top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:7px;}
+.skill-top span:first-child{color:var(--text);}
+.skill-top span:last-child{color:var(--orange);}
+.sbar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.sfill{height:100%;background:linear-gradient(90deg,var(--orange),var(--orange2));width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1);}
+.cert-item{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;transition:border-color 0.2s;}
+.cert-item:hover{border-color:var(--orange);}
+.cert-icon{width:36px;height:36px;border-radius:8px;background:rgba(249,115,22,0.1);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.cert-name{font-size:13px;color:var(--text);font-weight:600;}
+.cert-meta{font-size:11px;color:var(--muted);margin-top:2px;}
+
+/* CONTACT */
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:800px;align-items:start;}
+.contact-info-item{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.ci-icon{width:36px;height:36px;border-radius:9px;background:rgba(249,115,22,0.1);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.ci-label{font-size:11px;color:var(--muted);}
+.ci-val{font-size:13px;color:var(--text);}
+.ci-link{font-size:13px;color:var(--orange);text-decoration:none;}
+.ci-link:hover{text-decoration:underline;}
+.open-badge{margin-top:16px;padding:14px 16px;background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);border-radius:10px;font-size:12px;color:var(--orange);line-height:1.6;}
+.cf-row{margin-bottom:12px;}
+.cf-label{font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;}
+.cf-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit;outline:none;transition:border-color 0.2s;}
+.cf-input:focus{border-color:var(--orange);}
+.cf-ta{resize:none;height:90px;}
+.cf-btn{width:100%;padding:12px;background:var(--orange);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;margin-top:6px;transition:background 0.2s;font-family:inherit;}
+.cf-btn:hover{background:var(--orange2);}
+.cf-btn:disabled{opacity:0.6;cursor:not-allowed;}
+.form-msg{font-size:12px;margin-top:8px;text-align:center;min-height:18px;}
+.form-msg.success{color:#22c55e;}
+.form-msg.error{color:#ef4444;}
+
+/* FOOTER */
+.footer{text-align:center;padding:24px;border-top:1px solid var(--border);font-size:12px;color:var(--muted);}
+.footer span{color:var(--orange);}
+
+/* LIVE DOT */
+.live-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;display:inline-block;animation:pulse 2s infinite;margin-right:4px;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+@media(max-width:768px){
+  .section{padding:90px 24px 40px;}
+  .hero-name{font-size:36px;}
+  .proj-grid{grid-template-columns:1fr;}
+  .about-grid,.skills-layout,.contact-layout{grid-template-columns:1fr;}
+  .nav-links{gap:0;}
+  .nl{padding:6px 8px;font-size:11px;}
+  .navbar{padding:0 16px;}
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="logo" href="#home">krish<span>.</span>dev</a>
+  <div class="nav-links">
+    <a class="nl active" href="#home">Home</a>
+    <a class="nl" href="#about">About</a>
+    <a class="nl" href="#projects">Projects</a>
+    <a class="nl" href="#skills">Skills</a>
+    <a class="nl" href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="section" id="home">
+  <div class="avatar">KP</div>
+  <div class="hero-eyebrow">Open to Internships · Summer 2026</div>
+  <div class="hero-name">Hi, I'm <span>Krish Patel</span></div>
+  <div class="typed-role" id="typed"></div>
+  <div class="hero-desc">I build real security tools and web applications. Passionate about cybersecurity, API integration, and turning ideas into deployed products that actually work.</div>
+  <div class="hero-btns">
+    <button class="btn-o" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">🚀 View Projects</button>
+    <a class="btn-ghost" href="https://github.com/kp5036" target="_blank">🐙 GitHub</a>
+    <a class="btn-ghost" href="https://linkedin.com/in/krishpatel21" target="_blank">💼 LinkedIn</a>
+    <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">✉️ Contact</button>
+  </div>
+  <div class="stats">
+    <div><div class="stat-n">3</div><div class="stat-l">Projects</div></div>
+    <div class="divider-v"></div>
+    <div><div class="stat-n">3</div><div class="stat-l">Certifications</div></div>
+    <div class="divider-v"></div>
+    <div><div class="stat-n">8+</div><div class="stat-l">Languages</div></div>
+    <div class="divider-v"></div>
+    <div><div class="stat-n">3.3</div><div class="stat-l">GPA</div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="section" id="about">
+  <div class="sec-label">About Me</div>
+  <div class="sec-title">Who I <span>Am</span></div>
+  <div class="orange-line"></div>
+  <div class="about-grid">
+    <div class="about-card">
+      <div class="about-card-title">Background</div>
+      <div class="about-card-text">Second-year CS student at <strong>UIC</strong> focused on cybersecurity and web development. I build tools that solve real security problems — not just coursework projects.</div>
+    </div>
+    <div class="about-card">
+      <div class="about-card-title">Experience Timeline</div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-text"><strong>Building Manager · UIC</strong>Jul 2025 – Present</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-text"><strong>Teaching Assistant · UIC</strong>Jan – May 2024</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-text"><strong>Desk Operations · Penn State</strong>Dec 2023 – May 2024</div></div>
+    </div>
+    <div class="about-card">
+      <div class="about-card-title">Currently Learning</div>
+      <div class="about-card-text"><strong>Flask deployment</strong>, REST API security, ethical hacking via CTF challenges, and exploring React for future projects.</div>
+    </div>
+    <div class="about-card">
+      <div class="about-card-title">Looking For</div>
+      <div class="about-card-text">Internship opportunities in <strong>cybersecurity</strong>, full-stack development, or software engineering for Summer/Fall 2026.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="section" id="projects">
+  <div class="sec-label">My Work</div>
+  <div class="sec-title">Featured <span>Projects</span></div>
+  <div class="orange-line"></div>
+  <div class="proj-grid">
+    <div class="proj-card" onclick="openModal('security')">
+      <div class="proj-icon">🔐</div>
+      <div class="proj-name">Security Dashboard</div>
+      <div class="proj-desc">Full-stack threat intel app scanning URLs & IPs using 3 live security APIs with real-time charts.</div>
+      <div class="proj-tags"><span class="ptag">Python</span><span class="ptag">Flask</span><span class="ptag">Chart.js</span><span class="ptag">APIs</span></div>
+      <div class="click-hint">👆 Click to see details</div>
+    </div>
+    <div class="proj-card" onclick="openModal('academix')">
+      <div class="proj-icon">🎓</div>
+      <div class="proj-name">Academix</div>
+      <div class="proj-desc">OOP school management portal with CLI interface, 500+ record support and test-driven workflows.</div>
+      <div class="proj-tags"><span class="ptag">Python</span><span class="ptag">OOP</span><span class="ptag">CLI</span><span class="ptag">TDD</span></div>
+      <div class="click-hint">👆 Click to see details</div>
+    </div>
+    <div class="proj-card" onclick="openModal('retail')">
+      <div class="proj-icon">🛒</div>
+      <div class="proj-name">Retail Manager</div>
+      <div class="proj-desc">Real-time inventory system with modular CRUD operations and SDLC-driven C++ architecture.</div>
+      <div class="proj-tags"><span class="ptag">C++</span><span class="ptag">OOP</span><span class="ptag">SDLC</span><span class="ptag">CLI</span></div>
+      <div class="click-hint">👆 Click to see details</div>
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<div class="section" id="skills">
+  <div class="sec-label">Technical Skills</div>
+  <div class="sec-title">What I <span>Know</span></div>
+  <div class="orange-line"></div>
+  <div class="skills-layout">
+    <div>
+      <div class="skill-item"><div class="skill-top"><span>Python</span><span>90%</span></div><div class="sbar"><div class="sfill" data-w="90"></div></div></div>
+      <div class="skill-item"><div class="skill-top"><span>C++</span><span>80%</span></div><div class="sbar"><div class="sfill" data-w="80"></div></div></div>
+      <div class="skill-item"><div class="skill-top"><span>Flask / Web Dev</span><span>75%</span></div><div class="sbar"><div class="sfill" data-w="75"></div></div></div>
+      <div class="skill-item"><div class="skill-top"><span>Cybersecurity</span><span>70%</span></div><div class="sbar"><div class="sfill" data-w="70"></div></div></div>
+      <div class="skill-item"><div class="skill-top"><span>Java</span><span>65%</span></div><div class="sbar"><div class="sfill" data-w="65"></div></div></div>
+      <div class="skill-item"><div class="skill-top"><span>SQL / Databases</span><span>60%</span></div><div class="sbar"><div class="sfill" data-w="60"></div></div></div>
+    </div>
+    <div>
+      <div class="cert-item"><div class="cert-icon">🤖</div><div><div class="cert-name">Machine Learning A-Z</div><div class="cert-meta">Udemy · Jan 2025</div></div></div>
+      <div class="cert-item"><div class="cert-icon">🛡️</div><div><div class="cert-name">Complete Cyber Security Course</div><div class="cert-meta">Udemy · Nov 2024</div></div></div>
+      <div class="cert-item"><div class="cert-icon">💻</div><div><div class="cert-name">Multilingual Programming Diploma</div><div class="cert-meta">C-DAC · Apr 2023</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="section" id="contact">
+  <div class="sec-label">Get In Touch</div>
+  <div class="sec-title">Let's <span>Connect</span></div>
+  <div class="orange-line"></div>
+  <div class="contact-layout">
+    <div>
+      <div class="contact-info-item"><div class="ci-icon">📧</div><div><div class="ci-label">Email</div><a class="ci-link" href="mailto:kpate611@uic.edu">kpate611@uic.edu</a></div></div>
+      <div class="contact-info-item"><div class="ci-icon">📍</div><div><div class="ci-label">Location</div><div class="ci-val">Chicago, IL 60656</div></div></div>
+      <div class="contact-info-item"><div class="ci-icon">💼</div><div><div class="ci-label">LinkedIn</div><a class="ci-link" href="https://linkedin.com/in/krishpatel21" target="_blank">linkedin.com/in/krishpatel21</a></div></div>
+      <div class="contact-info-item"><div class="ci-icon">🐙</div><div><div class="ci-label">GitHub</div><a class="ci-link" href="https://github.com/kp5036" target="_blank">github.com/kp5036</a></div></div>
+      <div class="open-badge">🟢 Open to internships in cybersecurity, web dev, or software engineering for Summer 2026.</div>
+    </div>
+    <div>
+      <div class="cf-row"><div class="cf-label">Name</div><input class="cf-input" id="cf-name" placeholder="Your name"/></div>
+      <div class="cf-row"><div class="cf-label">Email</div><input class="cf-input" id="cf-email" placeholder="your@email.com"/></div>
+      <div class="cf-row"><div class="cf-label">Message</div><textarea class="cf-input cf-ta" id="cf-msg" placeholder="Hey Krish, I'd love to connect..."></textarea></div>
+      <button class="cf-btn" id="cf-btn" onclick="sendEmail()">Send Message →</button>
+      <div class="form-msg" id="form-msg"></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">Built by <span>Krish Patel</span> · <a href="https://github.com/kp5036/portfolio" target="_blank" style="color:var(--orange);text-decoration:none;">View Source</a></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-icon" id="m-icon"></div>
+    <div class="modal-title" id="m-title"></div>
+    <div class="modal-stack" id="m-stack"></div>
+    <div class="modal-desc" id="m-desc"></div>
+    <div class="modal-features">
+      <div class="modal-features-title">Key Features</div>
+      <div id="m-features"></div>
+    </div>
+    <div class="modal-btns" id="m-btns"></div>
+  </div>
+</div>
+
+<script>
+// ── PROJECT DATA ──────────────────────────────────────────
+const projects = {
+  security: {
+    icon: '🔐',
+    title: 'Security Dashboard',
+    stack: 'Python · Flask · HTML/CSS/JS · Chart.js · VirusTotal API · AbuseIPDB API · Shodan API · Render',
+    desc: 'A full-stack threat intelligence web app that scans URLs and IP addresses for security threats in real time. Built from scratch — this tool automates what entry-level security analysts do manually every day.',
+    features: [
+      'Scans any URL or IP against VirusTotal (70+ antivirus engines)',
+      'Checks IP reputation and abuse score via AbuseIPDB',
+      'Reveals open ports and organization info via Shodan',
+      'Dynamic threat badge: CLEAN / SUSPICIOUS / HIGH RISK',
+      'Interactive Chart.js doughnut charts for visual threat analysis',
+      'Scan history tracking and loading spinner UX',
+      'Deployed on Render with secure environment variable management'
+    ],
+    live: 'https://security-dashboard-rqw4.onrender.com',
+    github: 'https://github.com/kp5036/security-dashboard'
+  },
+  academix: {
+    icon: '🎓',
+    title: 'Academix',
+    stack: 'Python · CSV · CLI · OOP · Test-Driven Development',
+    desc: 'A command-line school management portal built with object-oriented design. Supports 500+ student records with automated testing workflows and robust input validation.',
+    features: [
+      'Full CRUD operations for student academic records',
+      'Scalable OOP architecture with clean modular design',
+      'Test-driven development with automated test workflows',
+      'Secure CLI-based navigation and input validation',
+      'Handles varied and malformed input gracefully'
+    ],
+    live: null,
+    github: 'https://github.com/kp5036'
+  },
+  retail: {
+    icon: '🛒',
+    title: 'Retail Management System',
+    stack: 'C++ · OOP · CLI · SDLC · Data Structures',
+    desc: 'A real-time retail inventory management system built in C++ using modular OOP design. Engineered with SDLC best practices and optimized data handling pipelines.',
+    features: [
+      'Real-time inventory tracking with add, remove, search operations',
+      'Modular OOP design patterns for extensibility',
+      'Optimized structured data handling pipelines',
+      'SDLC-driven development process',
+      'Clean architecture reducing technical errors'
+    ],
+    live: null,
+    github: 'https://github.com/kp5036'
+  }
+};
+
+function openModal(id) {
+  const p = projects[id];
+  document.getElementById('m-icon').textContent = p.icon;
+  document.getElementById('m-title').textContent = p.title;
+  document.getElementById('m-stack').textContent = p.stack;
+  document.getElementById('m-desc').textContent = p.desc;
+  document.getElementById('m-features').innerHTML = p.features.map(f => `<div class="modal-feature">${f}</div>`).join('');
+  let btns = '';
+  if(p.live) btns += `<a class="mbtn-live" href="${p.live}" target="_blank">🌐 View Live App</a>`;
+  btns += `<a class="mbtn-gh" href="${p.github}" target="_blank">🐙 View on GitHub</a>`;
+  document.getElementById('m-btns').innerHTML = btns;
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal(e) {
+  if(!e || e.target === document.getElementById('modal')) {
+    document.getElementById('modal').classList.remove('open');
+  }
+}
+
+// ── SCROLL ANIMATIONS ─────────────────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.classList.add('visible');
+      if(e.target.id === 'skills') animateSkills();
+    }
+  });
+}, {threshold: 0.1});
+
+document.querySelectorAll('.section').forEach(s => observer.observe(s));
+
+let skillsDone = false;
+function animateSkills() {
+  if(skillsDone) return;
+  skillsDone = true;
+  setTimeout(() => {
+    document.querySelectorAll('.sfill').forEach(b => b.style.width = b.dataset.w + '%');
+  }, 200);
+}
+
+// ── ACTIVE NAV ON SCROLL ──────────────────────────────────
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.nl');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if(window.scrollY >= s.offsetTop - 200) current = s.id;
+  });
+  navLinks.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+  });
+});
+
+// ── TYPING ANIMATION ──────────────────────────────────────
+const roles = ['CS Student @ UIC', 'Cybersecurity Enthusiast', 'Full-Stack Developer', 'Open to Internships · Summer 2026'];
+let ri = 0, ci = 0, deleting = false;
+function type() {
+  const el = document.getElementById('typed');
+  const cur = roles[ri];
+  if(!deleting) {
+    el.innerHTML = `<span>${cur.slice(0,ci+1)}</span><span style="opacity:0.4">|</span>`;
+    ci++;
+    if(ci === cur.length) { deleting = true; setTimeout(type, 2000); return; }
+  } else {
+    el.innerHTML = `<span>${cur.slice(0,ci-1)}</span><span style="opacity:0.4">|</span>`;
+    ci--;
+    if(ci === 0) { deleting = false; ri = (ri+1) % roles.length; }
+  }
+  setTimeout(type, deleting ? 35 : 65);
+}
+setTimeout(type, 500);
+
+// ── EMAILJS CONTACT FORM ──────────────────────────────────
+// SETUP INSTRUCTIONS:
+// 1. Go to https://emailjs.com and create a free account
+// 2. Add Gmail service → connect kp1862003@gmail.com
+// 3. Create a template with these variables: {{from_name}}, {{from_email}}, {{message}}
+// 4. Replace YOUR_PUBLIC_KEY, YOUR_SERVICE_ID, YOUR_TEMPLATE_ID below
+
+emailjs.init('YOUR_PUBLIC_KEY'); // ← replace this
+
+function sendEmail() {
+  const name = document.getElementById('cf-name').value.trim();
+  const email = document.getElementById('cf-email').value.trim();
+  const msg = document.getElementById('cf-msg').value.trim();
+  const btn = document.getElementById('cf-btn');
+  const status = document.getElementById('form-msg');
+
+  if(!name || !email || !msg) {
+    status.textContent = 'Please fill in all fields.';
+    status.className = 'form-msg error';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  status.textContent = '';
+
+  emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+    from_name: name,
+    from_email: email,
+    message: msg
+  }).then(() => {
+    btn.textContent = '✅ Message Sent!';
+    status.textContent = 'Thanks! I\'ll get back to you soon.';
+    status.className = 'form-msg success';
+    document.getElementById('cf-name').value = '';
+    document.getElementById('cf-email').value = '';
+    document.getElementById('cf-msg').value = '';
+  }).catch(() => {
+    btn.disabled = false;
+    btn.textContent = 'Send Message →';
+    status.textContent = 'Something went wrong. Email me directly at kpate611@uic.edu';
+    status.className = 'form-msg error';
+  });
+}
+</script>
+</body>
+</html>

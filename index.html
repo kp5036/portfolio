@@ -63,7 +63,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .tl-text strong{color:var(--text);display:block;font-size:13px;}
 
 /* PROJECTS */
-.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;}
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:900px;}
 .proj-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;transition:border-color 0.2s,transform 0.2s;position:relative;overflow:hidden;}
 .proj-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--orange),var(--orange2));transform:scaleX(0);transition:transform 0.3s;transform-origin:left;}
 .proj-card:hover{border-color:var(--orange);transform:translateY(-4px);}
@@ -176,7 +176,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
     <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">✉️ Contact</button>
   </div>
   <div class="stats">
-    <div><div class="stat-n">3</div><div class="stat-l">Projects</div></div>
+    <div><div class="stat-n">4</div><div class="stat-l">Projects</div></div>
     <div class="divider-v"></div>
     <div><div class="stat-n">3</div><div class="stat-l">Certifications</div></div>
     <div class="divider-v"></div>
@@ -224,6 +224,18 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
       <div class="proj-name">Security Dashboard</div>
       <div class="proj-desc">Full-stack threat intel app scanning URLs & IPs using 3 live security APIs with real-time charts.</div>
       <div class="proj-tags"><span class="ptag">Python</span><span class="ptag">Flask</span><span class="ptag">Chart.js</span><span class="ptag">APIs</span></div>
+      <div class="click-hint">👆 Click to see details</div>
+    </div>
+    <div class="proj-card" onclick="openModal('firewall')">
+      <div class="proj-icon">🔥</div>
+      <div class="proj-name">Firewall Rule Risk Auditor</div>
+      <div class="proj-desc">Flask web app that audits firewall rules, detects public exposure risks, and explains remediation steps.</div>
+      <div class="proj-tags">
+        <span class="ptag">Python</span>
+        <span class="ptag">Flask</span>
+        <span class="ptag">Security</span>
+        <span class="ptag">Render</span>
+      </div>
       <div class="click-hint">👆 Click to see details</div>
     </div>
     <div class="proj-card" onclick="openModal('academix')">
@@ -325,6 +337,23 @@ const projects = {
     ],
     live: 'https://security-dashboard-rqw4.onrender.com',
     github: 'https://github.com/kp5036/security-dashboard'
+  },
+  firewall: {
+    icon: '🔥',
+    title: 'Firewall Rule Risk Auditor',
+    stack: 'Python · Flask · HTML/CSS · Security Automation · Gunicorn · Render',
+    desc: 'A deployed security-focused web app that audits firewall-style rules, detects risky public exposure across services like SSH, RDP, MySQL, and Redis, and explains remediation steps in plain English.',
+    features: [
+      'Parses firewall-style rules using action, protocol, port, and source network',
+      'Detects public exposure risks such as services open to 0.0.0.0/0',
+      'Maps common ports to services including SSH, HTTPS, MySQL, PostgreSQL, RDP, and Redis',
+      'Classifies findings as HIGH, MEDIUM, LOW, SAFE, REVIEW, or INVALID',
+      'Provides plain-English explanations and remediation recommendations',
+      'Includes a rule format guide so users can test the app easily',
+      'Deployed publicly on Render with Gunicorn'
+    ],
+    live: 'https://firewall-rule-risk-auditor.onrender.com/',
+    github: 'https://github.com/kp5036/firewall-rule-risk-auditor'
   },
   academix: {
     icon: '🎓',
